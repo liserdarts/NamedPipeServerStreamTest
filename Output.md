@@ -1,4 +1,7 @@
-﻿# v2.0.5/Win10/Amd64
+﻿### v2.0.5/Win10/Amd64
+### v2.0.6/Debian9/x86
+### v2.0.5/Debian9/Amd64
+### v2.0.4/Raspbian9/ARM64
 
 ```text
 BeginWaitForConnection
@@ -14,7 +17,8 @@ Calling NamedPipeServerStream.Dispose
 Exiting loop
 ```
 
-# v2.0.6/Debian9/x86
+### v2.1-preview1/Win10/Amd64
+#### Without COMPlus_UseManagedHttpClientHandler
 
 ```text
 BeginWaitForConnection
@@ -28,9 +32,12 @@ Press any key to continue
 BeginWaitForConnection
 Calling NamedPipeServerStream.Dispose
 Exiting loop
+EndWaitForConnection
+EndWaitForConnection had exception.
+System.ObjectDisposedException was thrown. Expected in 2.0.
 ```
 
-# v2.1-preview1/Debian9/x86
+### v2.1-preview1/Debian9/x86
 
 ```text
 BeginWaitForConnection
@@ -69,36 +76,4 @@ System.NullReferenceException: Object reference not set to an instance of an obj
    at System.Threading.ThreadPoolWorkQueue.Dispatch()
    at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback()
 Segmentation fault
-```
-
-# v2.0.5/Debian9/Amd64
-
-```text
-BeginWaitForConnection
-EndWaitForConnection
-Received 40 bytes
-This is a message sent via a named pipe.
-Disconnect
-BeginWaitForConnection
-The background exception(s) can take a second. Don't finish too quickly
-Press any key to continue
-BeginWaitForConnection
-Calling NamedPipeServerStream.Dispose
-Exiting loop
-```
-
-# v2.0.4/Raspbian9/ARM64
-
-```text
-BeginWaitForConnection
-EndWaitForConnection
-Received 40 bytes
-This is a message sent via a named pipe.
-Disconnect
-BeginWaitForConnection
-The background exception(s) can take a second. Don't finish too quickly
-Press any key to continue
-BeginWaitForConnection
-Calling NamedPipeServerStream.Dispose
-Exiting loop
 ```

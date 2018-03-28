@@ -86,3 +86,19 @@ BeginWaitForConnection
 Calling NamedPipeServerStream.Dispose
 Exiting loop
 ```
+
+# v2.0.4/Raspbian9/ARM64
+
+```text
+BeginWaitForConnection
+EndWaitForConnection
+Received 40 bytes
+This is a message sent via a named pipe.
+Disconnect
+BeginWaitForConnection
+The background exception(s) can take a second. Don't finish too quickly
+Press any key to continue
+BeginWaitForConnection
+Calling NamedPipeServerStream.Dispose
+Exiting loop
+```

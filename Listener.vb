@@ -25,8 +25,6 @@
         Listen = False
 
         If Pipe IsNot Nothing Then
-            Console.WriteLine("Calling NamedPipeServerStream.Dispose")
-            Pipe.Dispose
         End If
 
         'End the listening thread
@@ -38,57 +36,84 @@
         Do
             If ConnectedEventHandler.WaitOne Then
                 ConnectedEventHandler.Reset
-                Console.WriteLine("BeginWaitForConnection")
-                Pipe.BeginWaitForConnection(AddressOf HandleConnection, Pipe)
+                SyncLock GetType(Console)
+                    Console.WriteLine("BeginWaitForConnection")
+                End SyncLock
+                Try
+                    Pipe.BeginWaitForConnection(AddressOf HandleConnection, Pipe)
+                Catch Ex As Exception
+                    HandleException("BeginWaitForConnection", Ex)
+                End Try
             End If
         Loop Until Not Listen
 
-        Console.WriteLine("Exiting loop")
+        SyncLock GetType(Console)
+            Console.WriteLine("Calling NamedPipeServerStream.Dispose")
+        End SyncLock
+        Pipe.Dispose
+
+        SyncLock GetType(Console)
+            Console.WriteLine("Exiting loop")
+        End SyncLock
     End Sub
 
     Private Sub HandleConnection(Result As IAsyncResult)
         Dim Stream As IO.Pipes.NamedPipeServerStream = Result.AsyncState
 
-        Console.WriteLine("EndWaitForConnection")
+        SyncLock GetType(Console)
+            Console.WriteLine("EndWaitForConnection")
+        End SyncLock
         Try
             Stream.EndWaitForConnection(Result)
-        Catch Ex As ObjectDisposedException
-            Console.ForegroundColor = ConsoleColor.Green
-            Console.WriteLine(String.Format("{0} was thrown", Ex.GetType.FullName))
-            Console.WriteLine("Expected in 2.0")
-            Console.ResetColor
-            Return
+
+            Dim RequestBytes(-1) As Byte
+            Dim Buffer(1024) As Byte
+            Dim Start As Integer = 0
+            Dim Length As Integer
+
+            Do
+                Length = Stream.Read(Buffer, 0, Buffer.Length)
+                
+                If Length > 0 Then
+                    Array.Resize(RequestBytes, RequestBytes.Length + Length)
+                    Array.Copy(Buffer, 0, RequestBytes, Start, Length)
+                    Start = Start + Length
+                End If
+            Loop Until Length < Buffer.Length
+
+            SyncLock GetType(Console)
+                Console.WriteLine(String.Format("Received {0} bytes", RequestBytes.Count))
+                Console.WriteLine(Text.Encoding.UTF8.GetChars(RequestBytes))
+            End SyncLock
+
+            If Stream.IsConnected Then
+                SyncLock GetType(Console)
+                    Console.WriteLine("Disconnect")
+                End SyncLock
+                Stream.Disconnect
+            End If
         Catch Ex As Exception
-            Console.ForegroundColor = ConsoleColor.Red
-            Console.WriteLine(String.Format("{0} was thrown", Ex.GetType.FullName))
-            Console.WriteLine("New behavior in 2.1")
-            Console.ResetColor
+            HandleException("EndWaitForConnection", Ex)
             Return
         End Try
 
-        Dim RequestBytes(-1) As Byte
-        Dim Buffer(1024) As Byte
-        Dim Start As Integer = 0
-        Dim Length As Integer
-
-        Do
-            Length = Stream.Read(Buffer, 0, Buffer.Length)
-                
-            If Length > 0 Then
-                Array.Resize(RequestBytes, RequestBytes.Length + Length)
-                Array.Copy(Buffer, 0, RequestBytes, Start, Length)
-                Start = Start + Length
-            End If
-        Loop Until Length < Buffer.Length
-
-        Console.WriteLine(String.Format("Received {0} bytes", RequestBytes.Count))
-        Console.WriteLine(Text.Encoding.UTF8.GetChars(RequestBytes))
-        
-        If Stream.IsConnected Then
-            Console.WriteLine("Disconnect")
-            Stream.Disconnect
-        End If
         ConnectedEventHandler.Set
+    End Sub
+
+    Private Sub HandleException(Source As String, Ex As Exception)
+        SyncLock GetType(Console)
+            Console.WriteLine(String.Format("{0} had exception.", Source))
+
+            If TypeOf Ex Is ObjectDisposedException Then
+                Console.ForegroundColor = ConsoleColor.Green
+                Console.WriteLine(String.Format("{0} was thrown. Expected in 2.0.", Ex.GetType.FullName))
+            Else
+                Console.ForegroundColor = ConsoleColor.Red
+                Console.WriteLine(String.Format("{0} was thrown. New behavior in 2.1", Ex.GetType.FullName))
+            End If
+
+            Console.ResetColor
+        End SyncLock
     End Sub
 
 End Class

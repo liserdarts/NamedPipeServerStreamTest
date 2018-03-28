@@ -69,4 +69,20 @@ System.NullReferenceException: Object reference not set to an instance of an obj
    at System.Threading.ThreadPoolWorkQueue.Dispatch()
    at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback()
 Segmentation fault
+```
+
+# v2.0.5/Debian9/Amd64
+
 ```text
+BeginWaitForConnection
+EndWaitForConnection
+Received 40 bytes
+This is a message sent via a named pipe.
+Disconnect
+BeginWaitForConnection
+The background exception(s) can take a second. Don't finish too quickly
+Press any key to continue
+BeginWaitForConnection
+Calling NamedPipeServerStream.Dispose
+Exiting loop
+```

@@ -14,7 +14,7 @@ Calling NamedPipeServerStream.Dispose
 Exiting loop
 ```
 
-# v2.0.6/Linux/x86
+# v2.0.6/Debian9/x86
 
 ```text
 BeginWaitForConnection
@@ -30,7 +30,7 @@ Calling NamedPipeServerStream.Dispose
 Exiting loop
 ```
 
-# v2.1-preview1/Linux/x86
+# v2.1-preview1/Debian9/x86
 
 ```text
 BeginWaitForConnection

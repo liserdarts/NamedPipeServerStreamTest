@@ -65,6 +65,9 @@ System.Net.Sockets.SocketException was thrown. New behavior in 2.1
 ```
 
 ### v2.1-preview1/Debian9/x86
+#### Without AppContext.SetSwitch
+#### With AppContext.SetSwitch("System.Net.Http.UseManagedHttpClientHandler", True)
+#### With AppContext.SetSwitch("System.Net.Http.UseManagedHttpClientHandler", False)
 
 ```text
 BeginWaitForConnection

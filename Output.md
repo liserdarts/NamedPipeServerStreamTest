@@ -19,6 +19,8 @@ Exiting loop
 
 ### v2.1-preview1/Win10/Amd64
 #### Without COMPlus_UseManagedHttpClientHandler
+#### COMPlus_UseManagedHttpClientHandler=true
+#### COMPlus_UseManagedHttpClientHandler=false
 
 ```text
 BeginWaitForConnection

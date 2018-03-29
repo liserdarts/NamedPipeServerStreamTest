@@ -1,5 +1,8 @@
 Module Program
     Sub Main(args As String())
+        'This does not change anything
+        'AppContext.SetSwitch("System.Net.Http.UseManagedHttpClientHandler", True)
+
         If args.Count > 0 Then
             RunAsClient(args(0))
             Return

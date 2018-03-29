@@ -27,11 +27,6 @@ Module Program
         Console.ReadKey
     End Sub
 
-    Private Sub RunAsServer()
-        Dim Server As New Listener
-        Server.StopListening
-    End Sub
-
     Private Sub RunAsClient(PipeName As String)
         Dim Client As New IO.Pipes.NamedPipeClientStream(".", PipeName, IO.Pipes.PipeDirection.Out)
         Client.Connect

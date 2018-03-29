@@ -3,19 +3,10 @@ Module Program
         'This does not change anything
         'AppContext.SetSwitch("System.Net.Http.UseManagedHttpClientHandler", True)
 
-        If args.Count > 0 Then
-            RunAsClient(args(0))
-            Return
-        End If
-
         Dim Server As New Listener
-
-        Dim StartInfo As New ProcessStartInfo
-        StartInfo.FileName = "dotnet"
-        StartInfo.Arguments = String.Format("""{0}"" {1}", Reflection.Assembly.GetExecutingAssembly.Location, Server.PipeName)
-        Dim Child = Process.Start(StartInfo)
-        Child.WaitForExit
-
+        
+        RunAsClient(Server.PipeName)
+        
         Server.StopListening
 
         SyncLock GetType(Console)

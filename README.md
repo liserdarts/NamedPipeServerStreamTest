@@ -5,7 +5,7 @@ Look in [Output.md](https://github.com/liserdarts/NamedPipeServerStreamTest/blob
 
 This branch is to show yet more differences when not spawing a child process.
 When running this program on v2.1-preview1/Debian9/x86 and spawing a child process there is a `NullReferneceException` in `System.Net.Sockets.SocketAsyncContext.AcceptOperation.InvokeCallback()`.
-When using the branch and not spawing a child process this exception does not happen.
+When using the NoSubProcess branch and not spawing a child process this exception does not happen.
 
 ## Differences between 2.0 and 2.1-Preview1.
 

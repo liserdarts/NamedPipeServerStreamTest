@@ -1,4 +1,4 @@
-﻿### v2.0.5/Win10/Amd64
+### v2.0.5/Win10/Amd64
 ### v2.0.6/Debian9/x86
 ### v2.0.5/Debian9/Amd64
 ### v2.0.4/Raspbian9/ARM64
@@ -40,6 +40,7 @@ System.ObjectDisposedException was thrown. Expected in 2.0.
 ```
 
 ### v2.1-preview1/Debian9/Amd64
+### v2.1.5/Debian9/Amd64
 #### Without AppContext.SetSwitch
 #### With AppContext.SetSwitch("System.Net.Http.UseManagedHttpClientHandler", True)
 #### With AppContext.SetSwitch("System.Net.Http.UseManagedHttpClientHandler", False)
